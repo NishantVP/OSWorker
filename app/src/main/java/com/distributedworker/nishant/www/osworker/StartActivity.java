@@ -8,14 +8,23 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
 import android.widget.Toast;
 
+import com.parse.ParseObject;
+
 public class StartActivity extends AppCompatActivity {
+
+    private EditText userName;
+    private String UserNameString;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
+
+        userName = (EditText) findViewById(R.id.userNameEditText);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -27,7 +36,7 @@ public class StartActivity extends AppCompatActivity {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
 
-                Toast.makeText(StartActivity.this, "Initiating connection with Server", Toast.LENGTH_LONG).show();
+
             }
         });
     }
@@ -37,6 +46,19 @@ public class StartActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_start, menu);
         return true;
+    }
+
+    public void enterAppClicked(View view)
+    {
+        UserNameString = userName.getText().toString();
+
+        ParseObject ClientUsers = new ParseObject("ClientUsers");
+        ClientUsers.put("Name", UserNameString);
+        ClientUsers.put("R", "Sean Plott");
+        ClientUsers.put("cheatMode", false);
+        ClientUsers.saveInBackground();
+
+        Toast.makeText(StartActivity.this, "Welcome " +UserNameString, Toast.LENGTH_SHORT).show();
     }
 
     @Override

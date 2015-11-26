@@ -10,5 +10,24 @@
     tools:showIn="@layout/activity_start" tools:context=".StartActivity">
 
     <TextView android:text="Hello World!" android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:id="@+id/textView" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/userNameEditText"
+        android:hint="Whats Your Name? "
+        android:layout_below="@+id/textView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="130dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Enter"
+        android:id="@+id/enterApp"
+        android:layout_below="@+id/userNameEditText"
+        android:layout_centerHorizontal="true"
+        android:onClick="enterAppClicked"/>
 </RelativeLayout>
