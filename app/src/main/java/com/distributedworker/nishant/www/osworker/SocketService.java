@@ -3,8 +3,10 @@ package com.distributedworker.nishant.www.osworker;
 import android.app.Service;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.location.Location;
 import android.os.AsyncTask;
 import android.os.IBinder;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -24,6 +26,8 @@ public class SocketService extends Service {
     private String serverPort;
     private SharedPreferences sharedpreferences;
 
+    public static final String ACTION_BROADCAST = SocketService.class.getName() + "Broadcast";
+
     //private DataInputStream in;
     //private DataOutputStream out;
 
@@ -39,6 +43,10 @@ public class SocketService extends Service {
         sharedpreferences = getSharedPreferences("OSWorkerMyPREFERENCES", MODE_PRIVATE);
         // Reading from SharedPreferences
         serverIP = sharedpreferences.getString("SERVER_IP", "");
+        serverPort = sharedpreferences.getString("SERVER_PORT", "");
+
+        Log.d("SocketService IP ",serverIP );
+        Log.d("SocketService Port ",serverPort);
 
         //ip = RunSocketClient();
         DownloadWebPageTask task = new DownloadWebPageTask();
@@ -53,8 +61,9 @@ public class SocketService extends Service {
         @Override
         protected String doInBackground(String... urls) {
             try {
+                int port = Integer.parseInt(serverPort);
 
-                client = new Socket("10.0.0.7", 4444);  //connect to server
+                client = new Socket(serverIP, port);  //connect to server
                 Log.d("ClientApp", "Started");
 
                 //in = new DataInputStream(client.getInputStream()); // READ FROM SERVER
@@ -75,7 +84,7 @@ public class SocketService extends Service {
                 BufferedReader receiveRead = new BufferedReader(new InputStreamReader(istream));
 
                 String receiveMessage;
-                String sendMessage = "This is New from Android";
+                String sendMessage = "This is from Android by Nishant";
 
                 printwriter.println(sendMessage);       // sending to server
                 printwriter.flush();                    // flush the data
@@ -85,6 +94,7 @@ public class SocketService extends Service {
                     if((receiveMessage = receiveRead.readLine()) != null) //receive from server
                     {
                         System.out.println("From PC - " +receiveMessage); // displaying at DOS prompt
+                        sendBroadcastMessage(receiveMessage);
                     }
                 }
 
@@ -106,6 +116,14 @@ public class SocketService extends Service {
             }
 
         }
+    }
+
+    private void sendBroadcastMessage(String messageFromPC) {
+
+        Intent intent = new Intent(ACTION_BROADCAST);
+        intent.putExtra("Message", messageFromPC);
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+
     }
 
     public String RunSocketClient() {

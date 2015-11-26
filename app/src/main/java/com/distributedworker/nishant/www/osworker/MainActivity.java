@@ -1,10 +1,14 @@
 package com.distributedworker.nishant.www.osworker;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -24,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private String serverIP;
     private String serverPort;
     private TextView userName;
+    private TextView textFromPC;
     private SharedPreferences sharedpreferences;
 
     @Override
@@ -35,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
         Log.d("MainActivity ", "Started");
 
         userName = (TextView)findViewById(R.id.userName);
+        textFromPC = (TextView)findViewById(R.id.textFromPC);
 
         sharedpreferences = getSharedPreferences("OSWorkerMyPREFERENCES", MODE_PRIVATE);
         // Reading from SharedPreferences
@@ -54,6 +60,16 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        LocalBroadcastManager.getInstance(this).registerReceiver(
+                new BroadcastReceiver() {
+                    @Override
+                    public void onReceive(Context context, Intent intent) {
+                        String messageFromPC = intent.getStringExtra("Message");
+                        textFromPC.setText(messageFromPC);
+                    }
+                }, new IntentFilter(SocketService.ACTION_BROADCAST)
+        );
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
