@@ -60,9 +60,10 @@ public class SocketService extends Service {
     private class DownloadWebPageTask extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... urls) {
+            Log.d("ClientApp", "Started 2");
             try {
                 int port = Integer.parseInt(serverPort);
-
+               System.out.println(port);
                 client = new Socket(serverIP, port);  //connect to server
                 Log.d("ClientApp", "Started");
 
@@ -105,6 +106,7 @@ public class SocketService extends Service {
 
 
             } catch (IOException e) {
+                Log.d("ClientApp", "Started 3");
                 return "Not done";
             }
             finally {

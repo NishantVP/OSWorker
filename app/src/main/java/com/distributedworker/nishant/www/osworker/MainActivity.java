@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
     public void startSocketClicked(View view)
     {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("ServerIP");
-        query.whereEqualTo("Running", true);
+        query.whereEqualTo("Running", "true");
         query.getFirstInBackground(new GetCallback<ParseObject>() {
             public void done(ParseObject object, ParseException e) {
                 if (object == null) {
