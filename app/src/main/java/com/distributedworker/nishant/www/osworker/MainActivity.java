@@ -84,6 +84,25 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+
+    public void ConnectWithServerClicked(View view) {
+        // use this to start and trigger a service
+        Intent i= new Intent(this, ConnectToServerService.class);
+        // potentially add data to the intent
+        i.putExtra("KEY1", "Value to be used by the service");
+        this.startService(i);
+    }
+
+    public void ProcessDataClicked(View view)
+    {
+        // use this to start and trigger a service
+        Intent i= new Intent(this, ProcessDataService.class);
+        // potentially add data to the intent
+        i.putExtra("KEY1", "Value to be used by the service");
+        this.startService(i);
+    }
+
+
     public void startSocketClicked(View view)
     {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("ServerIP");
@@ -112,10 +131,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
-
-
-
     }
 
 }

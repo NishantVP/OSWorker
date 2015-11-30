@@ -18,22 +18,30 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Start Socket"
-        android:id="@+id/startSocket"
-        android:onClick="startSocketClicked"
-        android:layout_below="@+id/userName"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="81dp" />
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Text from PC will appear here !"
         android:id="@+id/textFromPC"
-        android:layout_below="@+id/startSocket"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Connect With Server"
+        android:id="@+id/button"
+        android:layout_below="@+id/userName"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="55dp"/>
+        android:layout_marginTop="58dp"
+        android:onClick="ConnectWithServerClicked"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Process Data"
+        android:id="@+id/button2"
+        android:layout_below="@+id/button"
+        android:layout_centerHorizontal="true"
+        android:onClick="ProcessDataClicked"/>
 </RelativeLayout>
