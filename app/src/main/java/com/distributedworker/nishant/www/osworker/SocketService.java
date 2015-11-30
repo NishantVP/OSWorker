@@ -24,6 +24,7 @@ public class SocketService extends Service {
 
     private String serverIP;
     private String serverPort;
+    private String ParseObjID;
     private SharedPreferences sharedpreferences;
 
     public static final String ACTION_BROADCAST = SocketService.class.getName() + "Broadcast";
@@ -44,9 +45,11 @@ public class SocketService extends Service {
         // Reading from SharedPreferences
         serverIP = sharedpreferences.getString("SERVER_IP", "");
         serverPort = sharedpreferences.getString("SERVER_PORT", "");
+        ParseObjID = sharedpreferences.getString("MY_PARSE_OBJ_ID", "");
 
         Log.d("SocketService IP ",serverIP );
         Log.d("SocketService Port ",serverPort);
+        Log.d("SocketService ObjID ",ParseObjID);
 
         //ip = RunSocketClient();
         DownloadWebPageTask task = new DownloadWebPageTask();
@@ -63,7 +66,8 @@ public class SocketService extends Service {
             Log.d("ClientApp", "Started 2");
             try {
                 int port = Integer.parseInt(serverPort);
-               System.out.println(port);
+                System.out.println(port);
+
                 client = new Socket(serverIP, port);  //connect to server
                 Log.d("ClientApp", "Started");
 
@@ -85,7 +89,7 @@ public class SocketService extends Service {
                 BufferedReader receiveRead = new BufferedReader(new InputStreamReader(istream));
 
                 String receiveMessage;
-                String sendMessage = "This is from Android by Nishant";
+                String sendMessage = ParseObjID;
 
                 printwriter.println(sendMessage);       // sending to server
                 printwriter.flush();                    // flush the data
